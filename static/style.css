@@ -1,195 +1,621 @@
+/* ===========================================
+   AGGREGAT — Professional News Aggregator CSS
+   =========================================== */
+
+/* GOOGLE FONTS FALLBACK */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap');
+
+/* ── DESIGN TOKENS ── */
+:root {
+    /* Palette: Slate-based neutral, deep navy brand, vivid accents */
+    --bg:          #f0f2f5;
+    --bg-card:     #ffffff;
+    --bg-nav:      rgba(255,255,255,0.92);
+    --bg-catbar:   #ffffff;
+    --bg-sidebar:  #ffffff;
+
+    --text:        #0d1117;
+    --text-2:      #4b5563;
+    --text-3:      #9ca3af;
+
+    --brand:       #1a1f2e;
+    --brand-icon:  #4f6ef7;
+
+    --border:      #e5e7eb;
+    --border-2:    #d1d5db;
+
+    --radius-sm:   8px;
+    --radius:      12px;
+    --radius-lg:   16px;
+
+    --shadow-sm:   0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
+    --shadow:      0 4px 16px rgba(0,0,0,.07), 0 1px 4px rgba(0,0,0,.04);
+    --shadow-lg:   0 12px 40px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
+
+    /* Category colors */
+    --c-tech:       #3b82f6;
+    --c-tech-bg:    #eff6ff;
+    --c-gaming:     #8b5cf6;
+    --c-gaming-bg:  #f5f3ff;
+    --c-politics:   #ef4444;
+    --c-politics-bg:#fef2f2;
+    --c-sport:      #10b981;
+    --c-sport-bg:   #ecfdf5;
+    --c-other:      #6b7280;
+    --c-other-bg:   #f9fafb;
+
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --nav-h: 64px;
+    --cat-h: 48px;
+}
+
+:root.dark {
+    --bg:          #0d1117;
+    --bg-card:     #161b22;
+    --bg-nav:      rgba(13,17,23,0.95);
+    --bg-catbar:   #161b22;
+    --bg-sidebar:  #161b22;
+
+    --text:        #e6edf3;
+    --text-2:      #8b949e;
+    --text-3:      #484f58;
+
+    --brand:       #e6edf3;
+
+    --border:      #21262d;
+    --border-2:    #30363d;
+
+    --shadow-sm:   0 1px 3px rgba(0,0,0,.3);
+    --shadow:      0 4px 16px rgba(0,0,0,.4);
+    --shadow-lg:   0 12px 40px rgba(0,0,0,.5);
+
+    --c-tech-bg:    #1a2540;
+    --c-gaming-bg:  #1f1535;
+    --c-politics-bg:#2d1515;
+    --c-sport-bg:   #0f2820;
+    --c-other-bg:   #1c2128;
+}
+
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
-    margin: 0;
-    background: #f5f6f8;
-    color: #111;
-    transition: 0.3s;
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    transition: background .25s, color .25s;
 }
 
-/* TITLE */
-h1 {
-    text-align: center;
-    margin: 20px 0;
+a { text-decoration: none; color: inherit; }
+
+/* ── TOP NAV ── */
+.topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: var(--nav-h);
+    background: var(--bg-nav);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
-/* BUTTON */
-button {
-    display: block;
-    margin: 10px auto;
-    padding: 8px 14px;
-    border: none;
-    border-radius: 10px;
-    background: #111;
-    color: white;
-    cursor: pointer;
-}
-
-/* ===================== */
-/* SEARCH (ЦЕНТР + FIX) */
-/* ===================== */
-.search-form {
+.topnav-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 10px;
-
-    width: 100%;
-    max-width: 600px;
-    margin: 20px auto;
+    gap: 20px;
 }
 
-.search-form input {
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    color: var(--brand);
+    text-decoration: none;
+}
+
+.brand-icon {
+    font-size: 22px;
+    color: var(--brand-icon);
+    line-height: 1;
+}
+
+.brand-name {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -.03em;
+}
+
+/* Search */
+.search-form {
     flex: 1;
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    outline: none;
+    max-width: 500px;
+    display: flex;
+    gap: 8px;
+    margin: 0 auto;
 }
 
-.search-form button {
-    padding: 10px 16px;
-    border-radius: 10px;
+.search-wrap {
+    flex: 1;
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-3);
+    pointer-events: none;
+}
+
+.search-wrap input {
+    width: 100%;
+    padding: 9px 12px 9px 38px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 14px;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+}
+
+.search-wrap input:focus {
+    border-color: var(--brand-icon);
+    box-shadow: 0 0 0 3px rgba(79,110,247,.15);
+}
+
+.btn-search {
+    padding: 9px 18px;
+    border-radius: var(--radius-sm);
+    background: var(--brand-icon);
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
     border: none;
-    background: #2563eb;
-    color: white;
     cursor: pointer;
+    transition: background .15s, transform .1s;
     white-space: nowrap;
 }
+.btn-search:hover { background: #3a5ce8; transform: translateY(-1px); }
 
-/* ===================== */
-/* FILTERS */
-/* ===================== */
-.filters {
+/* Theme toggle */
+.theme-toggle {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text);
+    cursor: pointer;
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+    transition: border-color .15s, box-shadow .15s;
+}
+.theme-toggle:hover { border-color: var(--border-2); box-shadow: var(--shadow-sm); }
+
+:root:not(.dark) .icon-moon { display: none; }
+:root.dark .icon-sun { display: none; }
+
+/* ── CATEGORY BAR ── */
+.catbar {
+    background: var(--bg-catbar);
+    border-bottom: 1px solid var(--border);
+    height: var(--cat-h);
 }
 
-.filter {
-    padding: 6px 12px;
-    border-radius: 999px;
-    background: #e5e7eb;
-    text-decoration: none;
-    color: #111;
+.catbar-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.catbar-inner::-webkit-scrollbar { display: none; }
+
+.cat-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
     font-size: 13px;
+    font-weight: 500;
+    color: var(--text-2);
+    border: 1.5px solid transparent;
+    transition: all .15s;
+    white-space: nowrap;
+    cursor: pointer;
 }
+.cat-pill:hover { color: var(--text); background: var(--bg); border-color: var(--border); }
+.cat-pill.active { color: var(--text); background: var(--bg); border-color: var(--border-2); font-weight: 600; }
 
-/* ===================== */
-/* GRID */
-/* ===================== */
-.container {
+.cat-dot { width: 7px; height: 7px; border-radius: 50%; }
+.cat-dot.all      { background: linear-gradient(135deg, var(--c-tech), var(--c-gaming)); }
+.cat-dot.tech     { background: var(--c-tech); }
+.cat-dot.gaming   { background: var(--c-gaming); }
+.cat-dot.politics { background: var(--c-politics); }
+.cat-dot.sport    { background: var(--c-sport); }
+
+/* ── PAGE LAYOUT ── */
+.page-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
+    grid-template-columns: 1fr 320px;
+    gap: 32px;
+    align-items: start;
 }
 
-/* ===================== */
-/* CARD */
-/* ===================== */
-.card {
-    background: white;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-    transition: 0.3s;
+/* ── FEED / CARD GRID ── */
+.feed {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
 }
+
+/* ── ARTICLE CARD ── */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform .2s cubic-bezier(.4,0,.2,1), box-shadow .2s cubic-bezier(.4,0,.2,1), border-color .2s;
+    position: relative;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+.card.cat-technology::before { background: var(--c-tech); }
+.card.cat-gaming::before     { background: var(--c-gaming); }
+.card.cat-politics::before   { background: var(--c-politics); }
+.card.cat-sport::before      { background: var(--c-sport); }
+.card.cat-Другое::before     { background: var(--c-other); }
 
 .card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--border-2);
 }
 
-/* ===================== */
-/* 🔥 IMAGE FIX (ГЛАВНОЕ ИСПРАВЛЕНИЕ) */
-/* ===================== */
-.card img {
-    width: 100%;
-    height: 200px;           /* фикс высота */
-    object-fit: cover;       /* НЕ растягивает */
-    object-position: center; /* центрирует */
-    display: block;
-    border-bottom: 1px solid #eee;
+.card-header { padding: 20px 20px 12px; }
+
+.card-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    gap: 8px;
 }
 
-/* TITLE */
-.card h2 {
-    padding: 10px 15px 0;
-    margin: 0;
+.source-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* DESCRIPTION */
-.content {
-    padding: 0 15px;
-    font-size: 14px;
-    color: #444;
+/* Badges */
+.badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 5px;
+    letter-spacing: .02em;
+    white-space: nowrap;
+}
+.badge-technology { background: var(--c-tech-bg);    color: var(--c-tech); }
+.badge-gaming     { background: var(--c-gaming-bg);  color: var(--c-gaming); }
+.badge-politics   { background: var(--c-politics-bg);color: var(--c-politics); }
+.badge-sport      { background: var(--c-sport-bg);   color: var(--c-sport); }
+.badge-Другое     { background: var(--c-other-bg);   color: var(--c-other); }
 
+.card-title {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--text);
+}
+.card-title a { color: inherit; }
+.card-title a:hover { color: var(--brand-icon); }
+
+.card-desc {
+    padding: 0 20px 16px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-2);
+    flex: 1;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-/* INFO */
-.card p {
-    padding: 0 15px;
+/* Делаем так, чтобы картинка из Хабра аккуратно вставала вместо превью */
+.card-desc img {
+    width: calc(100% + 40px); /* Растягиваем на всю ширину карточки */
+    margin-left: -20px;       /* Компенсируем паддинги родителя .card-desc */
+    margin-top: -4px;
+    margin-bottom: 12px;
+    height: 180px;
+    object-fit: cover;        /* Чтобы картинка не сжималась и не деформировалась */
+    display: block;
+    border-bottom: 1px solid var(--border);
+}
+
+/* Сбрасываем ограничение в 3 строки (-webkit-line-clamp), 
+   если внутри карточки появилась картинка, чтобы текст не наезжал */
+.card-desc:has(img) {
+    display: block;
+    overflow: visible;
+    -webkit-line-clamp: unset;
+}
+
+/* Оформляем абзацы, если Хабр прислал текст в тегах <p> */
+.card-desc p {
+    margin-bottom: 8px;
     font-size: 13px;
-    color: #666;
-    margin: 6px 0;
+    color: var(--text-2);
 }
 
-/* LINK */
-.card a {
-    display: inline-block;
-    margin: 10px 15px;
-    color: #2563eb;
+/* Оформляем ссылки внутри текста, чтобы они не сливались */
+.card-desc a {
+    color: var(--brand-icon);
     text-decoration: none;
+    font-weight: 500;
 }
 
-/* TAGS */
+.card-desc a:hover {
+    text-decoration: underline;
+}
+
+.card-footer {
+    padding: 12px 20px 18px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: auto;
+}
+
 .tags {
-    padding: 10px 15px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    flex: 1;
+    overflow: hidden;
 }
 
 .tag {
-    display: inline-block;
     font-size: 11px;
-    padding: 4px 10px;
-    margin: 3px;
-    border-radius: 999px;
-    background: #eef2ff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--bg);
+    color: var(--text-2);
+    border: 1px solid var(--border);
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background .15s;
+}
+.tag:hover { background: var(--border); }
+
+.read-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--brand-icon);
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    transition: gap .15s;
+}
+.read-link:hover { gap: 7px; }
+
+/* Empty state */
+.empty-state {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 80px 24px;
+    color: var(--text-2);
+}
+.empty-icon { font-size: 48px; margin-bottom: 16px; }
+.empty-state h3 { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.empty-state p { font-size: 15px; margin-bottom: 24px; }
+.btn-primary {
+    display: inline-flex;
+    padding: 10px 24px;
+    background: var(--brand-icon);
+    color: #fff;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 14px;
+    transition: background .15s;
+}
+.btn-primary:hover { background: #3a5ce8; }
+
+/* ── SIDEBAR ── */
+.sidebar { position: sticky; top: calc(var(--nav-h) + var(--cat-h) + 32px); }
+
+.sidebar-sticky { display: flex; flex-direction: column; gap: 20px; }
+
+.widget {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
 }
 
-/* ===================== */
-/* DARK MODE */
-/* ===================== */
-.dark {
-    background: #0f1115;
-    color: #e5e5e5;
+.widget-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 18px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-2);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
 }
 
-.dark .card {
-    background: #161a22;
+/* Stats */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 4px;
+    gap: 2px;
+}
+.stat-item {
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border-radius: var(--radius-sm);
+    transition: background .15s;
+}
+.stat-item:hover { background: var(--bg); }
+.stat-num {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -.03em;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+}
+.stat-label { font-size: 11px; color: var(--text-3); font-weight: 500; }
+
+/* Trending */
+.trending-list {
+    list-style: none;
+    padding: 8px 4px;
+}
+.trending-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    align-items: flex-start;
+    transition: background .15s;
+}
+.trending-item:hover { background: var(--bg); }
+.trend-num {
+    font-size: 13px;
+    font-weight: 900;
+    color: var(--border-2);
+    letter-spacing: -.02em;
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-variant-numeric: tabular-nums;
+}
+.trend-title {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--text);
+    transition: color .15s;
+}
+.trend-title:hover { color: var(--brand-icon); }
+.trend-src {
+    display: block;
+    font-size: 11px;
+    color: var(--text-3);
+    margin-top: 3px;
 }
 
-.dark .tag {
-    background: #2a2f3a;
-    color: #c7d2fe;
+/* Cat links */
+.cat-links { padding: 8px 4px; display: flex; flex-direction: column; gap: 2px; }
+.cat-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    transition: background .15s;
+}
+.cat-link:hover { background: var(--bg); }
+.cat-link svg { margin-left: auto; color: var(--text-3); }
+.cat-link.tech:hover     { color: var(--c-tech); }
+.cat-link.gaming:hover   { color: var(--c-gaming); }
+.cat-link.politics:hover { color: var(--c-politics); }
+.cat-link.sport:hover    { color: var(--c-sport); }
+
+/* ── FOOTER ── */
+.site-footer {
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    padding: 20px 24px;
+    text-align: center;
+}
+.footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-3);
 }
 
-.dark .filter {
-    background: #2a2f3a;
-    color: #ddd;
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+    .page-wrapper {
+        grid-template-columns: 1fr;
+    }
+    .sidebar { position: static; }
+    .sidebar-sticky { flex-direction: row; flex-wrap: wrap; }
+    .widget { flex: 1; min-width: 260px; }
 }
 
-.dark .search-form input {
-    background: #1e1e1e;
-    color: white;
-    border: 1px solid #333;
-}
-
-.dark .search-form button {
-    background: #3b82f6;
+@media (max-width: 680px) {
+    .topnav-inner { gap: 12px; }
+    .search-form { max-width: none; }
+    .page-wrapper { padding: 20px 16px 48px; }
+    .feed { grid-template-columns: 1fr; }
+    .catbar-inner { gap: 2px; padding: 0 16px; }
+    .cat-pill { padding: 5px 10px; font-size: 12px; }
+    .sidebar-sticky { flex-direction: column; }
 }

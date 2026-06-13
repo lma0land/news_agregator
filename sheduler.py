@@ -6,12 +6,12 @@ import time
 def start_scheduler():
     scheduler = BackgroundScheduler()
 
-    # каждые 60 минут
-    scheduler.add_job(func=run_scraper, trigger="interval", minutes=60)
+    # каждые 30 минут
+    scheduler.add_job(func=run_scraper, trigger="interval", minutes=30)
 
     scheduler.start()
 
-    print("[SCHEDULER] Запущен. Обновление каждые 60 минут.")
+    print("[SCHEDULER] Запущен. Обновление каждые 30 минут.")
 
     try:
         while True:
