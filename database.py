@@ -7,13 +7,15 @@ def create_database():
     cursor = conn.cursor()
 
     cursor.execute("""
-    CREATE TABLE IF NOT EXISTS articles (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT UNIQUE,
-        link TEXT,
-        description TEXT,
-        published TEXT,
-        source TEXT
+    CREATE TABLE IF NOT EXISTS articles(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT UNIQUE,
+    link TEXT,
+    description TEXT,
+    published TEXT,
+    source TEXT,
+    category TEXT,
+    tags TEXT
     )
     """)
 
