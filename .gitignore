@@ -1,0 +1,4 @@
+news.db
+models/
+__pycache__/
+*.pyc
