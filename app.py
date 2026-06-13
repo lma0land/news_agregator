@@ -20,16 +20,13 @@ def home():
     cursor = conn.cursor()
 
     query = """
-    SELECT title, source, category, link
+    SELECT title, source, link
     FROM articles
     WHERE 1=1
     """
 
     params = []
 
-    if category:
-        query += " AND category = ?"
-        params.append(category)
 
     if search:
         query += " AND title LIKE ?"
@@ -58,9 +55,7 @@ def home():
 
         title = article[0]
         source = article[1]
-        category = article[2]
-        link = article[3]
-
+        link = article[2]
         html += f"""
         <div>
             <h3>{title}</h3>
