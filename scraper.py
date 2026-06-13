@@ -3,18 +3,12 @@
 import feedparser
 
 sources = {
-    "Reuters": "https://feeds.reuters.com/reuters/topNews",
-    "Habr": "https://habr.com/ru/rss/articles/?fl=ru",
-    
-    "Rambler Sport": "https://sport.rambler.ru/rss/",
-    
-    "BBC Technology": "https://feeds.bbci.co.uk/news/technology/rss.xml",
-    
-    "BBC Sport": "https://feeds.bbci.co.uk/sport/rss.xml",
-    
-    "Habr Programming": "https://habr.com/ru/rss/hub/programming/articles/?fl=ru"
 
+    "Habr": "https://habr.com/ru/rss/articles/?fl=ru",
+    "Rambler Sport": "https://sport.rambler.ru/rss/",
+    "BBC Politics": "https://feeds.bbci.co.uk/news/politics/rss.xml"
 }
+
 
 def get_news():
 

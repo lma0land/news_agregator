@@ -1,5 +1,3 @@
-# database.py
-
 import sqlite3
 
 def create_database():
@@ -13,7 +11,9 @@ def create_database():
         link TEXT,
         description TEXT,
         published TEXT,
-        source TEXT
+        source TEXT,
+        category TEXT DEFAULT 'Unknown',
+        tags TEXT DEFAULT ''
     )
     """)
 
