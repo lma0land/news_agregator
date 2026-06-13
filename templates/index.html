@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>News Aggregator</title>
@@ -7,52 +7,63 @@
 </head>
 
 <body>
-    <h1>📰 News Aggregator</h1>
 
-    <!-- DARK MODE -->
-    <button onclick="toggleTheme()">🌙 Toggle Dark Mode</button>
+<h1>News Aggregator</h1>
 
-    <div class="container">
+<button onclick="toggleTheme()">Toggle Dark Mode</button>
 
-        {% for article in articles %}
+<!-- SEARCH -->
+<form class="search-form" method="GET">
+    <input 
+        type="text" 
+        name="search" 
+        placeholder="Search news..."
+        value="{{ request.args.get('search', '') }}"
+    >
+    <button type="submit">Search</button>
+</form>
 
-        <div class="card">
-            <h2>{{ article[1] }}</h2>
+<!-- FILTERS -->
+<div class="filters">
+    <a href="/" class="filter">All</a>
+    <a href="/?category=Спорт" class="filter">Sport</a>
+    <a href="/?category=Технологии" class="filter">Tech</a>
+    <a href="/?category=Политика" class="filter">Politics</a>
+</div>
 
-            <p>{{ article[3] }}</p>
+<!-- CARDS -->
+<div class="container">
 
-            <p><b>Источник:</b> {{ article[5] }}</p>
+{% for article in articles %}
 
-            <p><b>Категория:</b> {{ article[6] }}</p>
+<div class="card">
 
-            <p>
-                <a href="{{ article[2] }}" target="_blank">Открыть источник</a>
-            </p>
+    <h2>{{ article[0] }}</h2>
 
-            <div class="tags">
-                {% for tag in article[7].split(',') %}
-                    <span class="tag">#{{ tag }}</span>
-                {% endfor %}
-            </div>
-        </div>
-
-        {% endfor %}
-
+    <div class="content">
+        {{ article[3] | safe }}
     </div>
+
+    <p><b>Источник:</b> {{ article[1] }}</p>
+    <p><b>Категория:</b> {{ article[5] }}</p>
+
+    <a href="{{ article[2] }}" target="_blank">Read more</a>
+
+    <div class="tags">
+        {% for tag in (article[6] or '').split(',') if tag %}
+            <span class="tag">#{{ tag }}</span>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
 
 <script>
 function toggleTheme() {
     document.body.classList.toggle("dark");
-    localStorage.setItem(
-        "theme",
-        document.body.classList.contains("dark") ? "dark" : "light"
-    );
-}
-
-window.onload = function () {
-    if (localStorage.getItem("theme") === "dark") {
-        document.body.classList.add("dark");
-    }
 }
 </script>
 

@@ -12,6 +12,7 @@ def get_connection():
 @app.route("/")
 def home():
     search = request.args.get("search", "")
+    category = request.args.get("category", "")
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -27,6 +28,10 @@ def home():
     if search:
         query += " AND title LIKE ?"
         params.append(f"%{search}%")
+
+    if category:
+        query += " AND category = ?"
+        params.append(category)
 
     query += " ORDER BY id DESC"
 

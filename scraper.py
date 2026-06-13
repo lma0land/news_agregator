@@ -1,6 +1,12 @@
 import feedparser
 from classifier import classify_article, extract_tags
 from database import insert_article
+import re
+
+
+def clean_html(text):
+    return re.sub(r"<.*?>", "", text)
+
 
 sources = {
     "Reuters": "https://feeds.reuters.com/reuters/topNews",
@@ -18,12 +24,15 @@ def scrape_news():
     for source, url in sources.items():
         feed = feedparser.parse(url)
 
-        for article in feed.entries[:30]:  # 100 слишком тяжело → 30 норм
+        for article in feed.entries[:30]:
 
             title = article.get("title", "")
-            description = article.get("summary", "")
+            raw_description = article.get("summary", "")
             link = article.get("link", "")
             published = article.get("published", "")
+
+            # ✅ очистка HTML
+            description = clean_html(raw_description)
 
             category = classify_article(title, description)
             tags = ",".join(extract_tags(title, description))
@@ -49,3 +58,7 @@ def scrape_news():
             })
 
     return news
+
+
+if __name__ == "__main__":
+    scrape_news()
