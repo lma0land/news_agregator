@@ -32,15 +32,14 @@ def classify_article(title, description):
     category = max(scores, key=scores.get)
 
     if scores[category] == 0:
-        return "Другое"
+        category = "Другое"
 
     return category
 
-
 def extract_tags(title, description):
-    text = f"{title} {description}"
+    text = f"{title} {description}".lower()
 
-    words = re.findall(r"\b[a-zA-Z]{4,}\b", text.lower())
+    words = re.findall(r"\b[a-zA-Z]{4,}\b", text)
 
     stop_words = {
         "that", "this", "with", "from",
